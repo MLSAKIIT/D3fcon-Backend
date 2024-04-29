@@ -24,9 +24,9 @@ app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/submit/", authenticate, submitRouter);
 
-// Development Endpoints
+//----------------Development Endpoints--------------------------------//
 
-//Get all users
+//Get a player
 app.get("/player", authenticate, async (req, res) => {
   try {
     const { id } = req.player;
@@ -46,6 +46,7 @@ app.get("/player", authenticate, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+//Get all users
 app.get("/", async (req, res) => {
   try {
     const users = await User.find({});
@@ -68,7 +69,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-// Endpoint to push Question
+// Endpoint to push a Question
 app.post("/question", async (req, res) => {
   try {
     const question = await Question.create(req.body);
@@ -80,7 +81,7 @@ app.post("/question", async (req, res) => {
   }
 });
 
-//seenStatus
+//seenStatus update
 app.post("/seenstatus", authenticate, async (req, res) => {
   try {
     const { id } = req.player;
@@ -94,7 +95,7 @@ app.post("/seenstatus", authenticate, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
+//Event Satus update
 app.post("/update", async (req, res) => {
   try {
     const users = await User.find({});
@@ -107,6 +108,7 @@ app.post("/update", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+//----------------Development Endpoints End--------------------------------//
 const server = async () => {
   try {
     await connectDb(process.env.DATABASE_URL);
